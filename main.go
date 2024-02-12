@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sort"
 	"strings"
 )
 
@@ -32,32 +33,18 @@ func sortMapKey(mapString map[string]int) string {
 	// if there are two different char that have the same value sort alphabetically
 	// but put capital letter first
 
-	// sort.Slice(stringSlice, func(i, j int) bool {
-	// 	if mapString[stringSlice[i]] == mapString[stringSlice[j]] {
-	// 		if stringSlice[i] == strings.ToUpper(stringSlice[i]) && stringSlice[j] == strings.ToLower(stringSlice[j]) {
-	// 			return true
-	// 		} else if stringSlice[i] == strings.ToLower(stringSlice[i]) && stringSlice[j] == strings.ToUpper(stringSlice[j]) {
-	// 			return false
-	// 		} else {
-	// 			return stringSlice[i] < stringSlice[j]
-	// 		}
-	// 	}
-	// 	return mapString[stringSlice[i]] > mapString[stringSlice[j]]
-	// })
-
-	// Bubble sort based on the value of mapString
-	for i := 0; i < len(stringSlice)-1; i++ {
-		for j := 0; j < len(stringSlice)-i-1; j++ {
-			if mapString[stringSlice[j]] < mapString[stringSlice[j+1]] {
-				stringSlice[j], stringSlice[j+1] = stringSlice[j+1], stringSlice[j]
-			}
-			if mapString[stringSlice[j]] == mapString[stringSlice[j+1]] {
-				if strings.ToLower(stringSlice[j]) > strings.ToLower(stringSlice[j+1]) {
-					stringSlice[j], stringSlice[j+1] = stringSlice[j+1], stringSlice[j]
-				}
+	sort.Slice(stringSlice, func(i, j int) bool {
+		if mapString[stringSlice[i]] == mapString[stringSlice[j]] {
+			if stringSlice[i] == strings.ToUpper(stringSlice[i]) && stringSlice[j] == strings.ToLower(stringSlice[j]) {
+				return true
+			} else if stringSlice[i] == strings.ToLower(stringSlice[i]) && stringSlice[j] == strings.ToUpper(stringSlice[j]) {
+				return false
+			} else {
+				return stringSlice[i] < stringSlice[j]
 			}
 		}
-	}
+		return mapString[stringSlice[i]] > mapString[stringSlice[j]]
+	})
 
 	wordString := strings.Join(stringSlice, "")
 	return wordString
